@@ -1,0 +1,5 @@
+Run 'runAlg.sh' to implement the algorithm on the four suggested graphs, i.e. 3elt, add20, Facebook/Twitter.
+
+Then run 'runPlot.sh' to visualize the results. Change the .txt file to generate the results for the specific graph.
+
+Also, make sure you have Java SDK/JRE, Maven, and gnuplot INSTALLED and PATHED correctly.
