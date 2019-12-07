@@ -71,7 +71,7 @@ public class Jabeja {
       T  = 1;
     T *= 0.9;
     if (T < 0.00001)
-      T = (float)0.00001;
+      T = 0.00001F;
 
 
     //Extra task
