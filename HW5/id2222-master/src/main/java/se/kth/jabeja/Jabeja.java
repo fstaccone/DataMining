@@ -19,6 +19,7 @@ public class Jabeja {
   private int round;
   private float T;
   private boolean resultFileCreated = false;
+  Random random = new Random();
 
   //-------------------------------------------------------------------
   public Jabeja(HashMap<Integer, Node> graph, Config config) {
@@ -36,6 +37,12 @@ public class Jabeja {
     for (round = 0; round < config.getRounds(); round++) {
       for (int id : entireGraph.keySet()) {
         sampleAndSwap(id);
+
+        //Task 2 (restarts)
+        /*
+        if (round % 400 == 0)
+          T = 1;
+        */
       }
 
       //one cycle for all nodes have completed.
@@ -46,52 +53,63 @@ public class Jabeja {
   }
 
   /**
-   * Simulated analealing cooling function
+   * Simulated annealing cooling function
    */
   private void saCoolDown(){
-    // TODO for second task
+
+    //Task 1
+    /*
     if (T > 1)
       T -= config.getDelta();
     if (T < 1)
       T = 1;
+    */
+
+    //Task 2 SA
+
+    if (T > 1)
+      T  = 1;
+    T *= 0.9;
+    if (T < 0.00001)
+      T = (float)0.00001;
+
+
+    //Extra task
+
+
+
   }
 
   /**
-   * Sample and swap algorith at node p
+   * Sample and swap algorithm at node p
    * @param nodeId
    */
   private void sampleAndSwap(int nodeId) {
     Node partner = null;
     Node nodep = entireGraph.get(nodeId);
 
-    // First, we attempt to randomly sample the graph
     if (config.getNodeSelectionPolicy() == NodeSelectionPolicy.HYBRID
             || config.getNodeSelectionPolicy() == NodeSelectionPolicy.LOCAL) {
       // swap with random neighbors
-      // TODO
-      partner= findPartner(nodeId, getNeighbors(nodep));
+      partner=findPartner(nodeId,getNeighbors(nodep));
     }
 
     if (config.getNodeSelectionPolicy() == NodeSelectionPolicy.HYBRID
             || config.getNodeSelectionPolicy() == NodeSelectionPolicy.RANDOM) {
       // if local policy fails then randomly sample the entire graph
-      // TODO
-      if(partner==null){  // AND partner is NULL, get partner
-        partner= findPartner(nodeId,getSample(nodeId));
+      if (partner == null) {
+        partner = findPartner(nodeId, getSample(nodeId));
       }
+
     }
 
     // swap the colors
-    // TODO
-    if(partner!=null){  //If partner is found, change color between p and partner (node q)
-      int tempColor=nodep.getColor();
+    if (partner != null) {
+      int colorp = nodep.getColor();
       nodep.setColor(partner.getColor());
-      partner.setColor(tempColor);
-
-      // Update all these stuff
-      entireGraph.put(nodeId,nodep);
-      entireGraph.put(partner.getId(),partner);
+      partner.setColor(colorp);
       numberOfSwaps++;
+
     }
   }
 
@@ -101,24 +119,54 @@ public class Jabeja {
 
     Node bestPartner = null;
     double highestBenefit = 0;
-    double dpp, dqq, dpq, dqp, newSum, oldSum; // variables as per algorithm
 
-    // TODO
-    for (Integer q : nodes){
-      Node nodeq = entireGraph.get(q);
-      dpp = getDegree(nodep, nodep.getColor());
-      dqq = getDegree(nodeq, nodeq.getColor());
-      oldSum = Math.pow(dpp, config.getAlpha())+ Math.pow(dqq, config.getAlpha());
-      dpq = getDegree(nodep, nodeq.getColor());
-      dqp = getDegree(nodeq, nodep.getColor());
-      newSum = Math.pow(dpq, config.getAlpha())+ Math.pow(dqp, config.getAlpha());;
+    double alpha = config.getAlpha();
 
-      if((newSum*T > oldSum)&&(newSum > highestBenefit)){
-        highestBenefit = newSum;
-        bestPartner = nodeq;  // Best partner is node q
+    for (int qid: nodes) {
+      Node nodeq = entireGraph.get(qid);
+
+      if (nodeq.getColor() == nodep.getColor()) continue; //skip if same color
+
+      int dpp = getDegree(nodep, nodep.getColor());
+      int dqq = getDegree(nodeq, nodeq.getColor());
+      double oldE = Math.pow(dpp, alpha) + Math.pow(dqq, alpha);
+
+      int dpq = getDegree(nodep, nodeq.getColor());
+      int dqp = getDegree(nodeq, nodep.getColor());
+
+      double newE = Math.pow(dpq, alpha) + Math.pow(dqp, alpha);
+
+      //Task 1
+      /*
+      if ((newE * this.T > oldE) && (newE > highestBenefit)) {
+        bestPartner = nodeq;
+        highestBenefit = newE;
       }
+      */
+
+      //Task 2 SA
+
+      double acceptanceProbability = Math.pow(Math.E, (newE - oldE) / T);
+      double r = random.nextDouble();
+      if ((acceptanceProbability > r) && (newE > highestBenefit)) {
+        bestPartner = nodeq;
+        highestBenefit = newE;
+      }
+
+
+      //Extra task
+      /*
+      double acceptanceProbability = 1 / (1 + Math.pow(Math.E, (oldE - newE) / T));
+      double r = random.nextDouble();
+      if ((acceptanceProbability > r) && (newE > highestBenefit)) {
+        bestPartner = nodeq;
+        highestBenefit = newE;
+      }
+      */
+
     }
-    return bestPartner; // Return node q as partner (for inb4 node p)
+
+    return bestPartner;
   }
 
   /**
