@@ -1,0 +1,18 @@
+
+osquid:CommentedOutCodeLine…"<This block of commented-out lines of code should be removed.(Ğ×™’şÿÿÿÿ8ÑÄº–î-
+Wsquid:S1854‰"8Remove this useless assignment to local variable "size".(àö–¢8ÑÄº–î-
+‹squid:S1319"mThe type of the "graph" object should be an interface such as "Map" rather than the implementation "HashMap".(êª”í8ÑÄº–î-
+nsquid:CommentedOutCodeLineQ"<This block of commented-out lines of code should be removed.(€³±üıÿÿÿÿ8ÑÄº–î-
+ksquid:S00116"LRename this field "T" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.( ó‘8ÑÄº–î-
+Rsquid:S1066r"/Merge this if statement with the enclosing one.(ìİ±úüÿÿÿÿ8ÑÄº–î-
+xsquid:S2293Ì"YReplace the type specification in this constructor call with the diamond operator ("<>").(å“¢–8ÑÄº–î-
+vsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ÁıÈáøÿÿÿÿ8ÑÄº–î-
+Ssquid:S1066À"/Merge this if statement with the enclosing one.(îïû­üÿÿÿÿ8ÑÄº–î-
+[
+squid:S1068"9Replace this use of System.out or System.err by a logger.(½¾‹ıÿÿÿÿ8ÑÄº–î-
+xsquid:S2293ê"YReplace the type specification in this constructor call with the diamond operator ("<>").(å“¢–8ÑÄº–î-
+V
+squid:S106G"9Replace this use of System.out or System.err by a logger.(ôêÖ³8ÑÄº–î-
+ssquid:S00116"TRename this field "initial_T" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ŒØà8ÑÄº–î-
+Hsquid:S1481‰")Remove this unused "size" local variable.(àö–¢8ÑÄº–î-
+Ssquid:S2864‹"4Iterate over the "entrySet" instead of the "keySet".(î¤¥ı8ÑÄº–î-

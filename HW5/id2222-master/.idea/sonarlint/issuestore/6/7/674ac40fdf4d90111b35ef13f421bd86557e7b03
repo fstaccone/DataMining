@@ -1,0 +1,4 @@
+
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¥³úÕ
+^squid:HiddenFieldCheck"9Rename "graph" which hides the field declared at line 22.(ìè¤§úÿÿÿÿ
+asquid:UselessImportCheck":Remove this unused import 'java.io.FileNotFoundException'.(·î™ùÿÿÿÿ

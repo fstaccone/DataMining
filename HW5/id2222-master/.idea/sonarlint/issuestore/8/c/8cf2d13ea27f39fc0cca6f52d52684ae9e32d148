@@ -1,0 +1,19 @@
+
+jsquid:S3008"PRename this field "GRAPH" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(»³‚şÿÿÿÿ
+‚squid:S00116"lRename this field "GRAPH_INIT_COLOR_SELECTION_POLICY" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ˆÃ°š
+osquid:S3008"URename this field "OUTPUT_DIR" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÇàÅêüÿÿÿÿ
+jsquid:S00116"ORename this field "HELP" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÖÇæ«ûÿÿÿÿ
+jsquid:S00116"ORename this field "SEED" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(·ôà¹úÿÿÿÿ
+M
+squid:S106"9Replace this use of System.out or System.err by a logger.(ÈÏ¸Û
+ysquid:S00116"cRename this field "UNIFORM_RAND_SAMPLE_SIZE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ƒ“±Ñ
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(±ƒ Ùúÿÿÿÿ
+lsquid:S00116"QRename this field "ROUNDS" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ã±Úïıÿÿÿÿ
+M
+squid:S106"9Replace this use of System.out or System.err by a logger.(Ûî˜Ü
+qsquid:S00116"VRename this field "TEMPERATURE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÓÃ¬ıÿÿÿÿ
+fsquid:S00116"PRename this field "DELTA" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ää×©
+{squid:S00116"`Rename this field "NODE_SELECTION_POLICY" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(°­êƒÿÿÿÿÿ
+osquid:S00116"YRename this field "NUM_PARTITIONS" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(èşãª
+fsquid:S00116"PRename this field "ALPHA" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÊŠ¡Ú
+`squid:CallToDeprecatedMethod"5Remove this use of "setUsageWidth"; it is deprecated.(ôÒ¨¢ûÿÿÿÿ

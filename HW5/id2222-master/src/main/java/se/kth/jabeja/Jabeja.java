@@ -17,9 +17,15 @@ public class Jabeja {
   private final List<Integer> nodeIds;
   private int numberOfSwaps;
   private int round;
-  private float T;
+  private double T;
   private boolean resultFileCreated = false;
-  Random random = new Random();
+  private double alpha;
+  private double delta;
+  private double minEdgeCut;
+  private int rounds;
+  private double restart;
+  private double initial_T;
+
 
   //-------------------------------------------------------------------
   public Jabeja(HashMap<Integer, Node> graph, Config config) {
@@ -29,20 +35,31 @@ public class Jabeja {
     this.numberOfSwaps = 0;
     this.config = config;
     this.T = config.getTemperature();
+    this.delta = 0.1;
+    this.alpha = 1.1;
+    this.minEdgeCut = Double.POSITIVE_INFINITY;
+    this.rounds = 1000;
+    this.restart = 40;
+    this.initial_T = 1.00;
+
   }
 
 
   //-------------------------------------------------------------------
   public void startJabeja() throws IOException {
-    for (round = 0; round < config.getRounds(); round++) {
+    for (round = 0; round < rounds; round++) {
+
+      //Task 2 (restarts)
+
+      if (round % restart == 0) {
+        T = initial_T;
+        System.out.println("Restarting\n\n\n\n");
+      }
+
+
       for (int id : entireGraph.keySet()) {
         sampleAndSwap(id);
 
-        //Task 2 (restarts)
-        /*
-        if (round % 400 == 0)
-          T = 1;
-        */
       }
 
       //one cycle for all nodes have completed.
@@ -50,6 +67,8 @@ public class Jabeja {
       saCoolDown();
       report();
     }
+
+    System.out.println("Minimum edge cut: " + minEdgeCut);
   }
 
   /**
@@ -60,7 +79,7 @@ public class Jabeja {
     //Task 1
     /*
     if (T > 1)
-      T -= config.getDelta();
+      T -= delta;
     if (T < 1)
       T = 1;
     */
@@ -69,14 +88,9 @@ public class Jabeja {
 
     if (T > 1)
       T  = 1;
-    T *= 0.9;
+    T *= delta;
     if (T < 0.00001)
       T = 0.00001F;
-
-
-    //Extra task
-
-
 
   }
 
@@ -113,14 +127,22 @@ public class Jabeja {
     }
   }
 
+  //Task 2 SA and Extra task
+  private double acceptanceProbability(double newE, double oldE) {
+    //Task 2
+    //return Math.pow(Math.E, (newE - oldE) / T);
+
+    //Extra task
+    return  1 / (1 + Math.pow(Math.E, (oldE - newE) / T));
+  }
+
   public Node findPartner(int nodeId, Integer[] nodes){
 
     Node nodep = entireGraph.get(nodeId);
-
     Node bestPartner = null;
+    Node bestSAPartner = null;
     double highestBenefit = 0;
-
-    double alpha = config.getAlpha();
+    double highestSABenefit = 0;
 
     for (int qid: nodes) {
       Node nodeq = entireGraph.get(qid);
@@ -137,36 +159,20 @@ public class Jabeja {
       double newE = Math.pow(dpq, alpha) + Math.pow(dqp, alpha);
 
       //Task 1
-      /*
       if ((newE * this.T > oldE) && (newE > highestBenefit)) {
         bestPartner = nodeq;
         highestBenefit = newE;
       }
-      */
 
       //Task 2 SA
 
-      double acceptanceProbability = Math.pow(Math.E, (newE - oldE) / T);
-      double r = random.nextDouble();
-      if ((acceptanceProbability > r) && (newE > highestBenefit)) {
-        bestPartner = nodeq;
-        highestBenefit = newE;
+      else if (acceptanceProbability(newE, oldE) > Math.random() && newE > highestSABenefit){
+        bestSAPartner = nodeq;
+        highestSABenefit = newE;
       }
-
-
-      //Extra task
-      /*
-      double acceptanceProbability = 1 / (1 + Math.pow(Math.E, (oldE - newE) / T));
-      double r = random.nextDouble();
-      if ((acceptanceProbability > r) && (newE > highestBenefit)) {
-        bestPartner = nodeq;
-        highestBenefit = newE;
-      }
-      */
 
     }
-
-    return bestPartner;
+    return (bestPartner != null) ? bestPartner : bestSAPartner;
   }
 
   /**
@@ -279,6 +285,8 @@ public class Jabeja {
     }
 
     int edgeCut = grayLinks / 2;
+    if (edgeCut < minEdgeCut)
+      minEdgeCut = edgeCut;
 
     logger.info("round: " + round +
             ", edge cut:" + edgeCut +
@@ -300,11 +308,11 @@ public class Jabeja {
             "NS" + "_" + config.getNodeSelectionPolicy() + "_" +
             "GICP" + "_" + config.getGraphInitialColorPolicy() + "_" +
             "T" + "_" + config.getTemperature() + "_" +
-            "D" + "_" + config.getDelta() + "_" +
+            "D" + "_" + delta + "_" +
             "RNSS" + "_" + config.getRandomNeighborSampleSize() + "_" +
             "URSS" + "_" + config.getUniformRandomSampleSize() + "_" +
-            "A" + "_" + config.getAlpha() + "_" +
-            "R" + "_" + config.getRounds() + ".txt";
+            "A" + "_" + alpha + "_" +
+            "R" + "_" + rounds + ".txt";
 
     if (!resultFileCreated) {
       File outputDir = new File(config.getOutputDir());
