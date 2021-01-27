@@ -6,3 +6,5 @@
 Data Mining - Course ID2222 at KTH Royal Institute of Technology
 
 Author: Francesco Staccone
+
+Each HW contains a report which describes the task that has been completed.
